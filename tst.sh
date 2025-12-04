@@ -15,14 +15,20 @@ fi
 cd /tmp
 set -e
 rm -rf *ArabicSavior* > /dev/null 2>&1
-curl -sL https://github.com/fairbird/ArabicSavior/archive/refs/heads/main.tar.gz | tar -xzif [ -f '/tmp/ArabicSavior-main.tar.gz' ]; then
+curl -sL https://github.com/fairbird/ArabicSavior/archive/refs/heads/main.tar.gz -o /tmp/ArabicSavior-main.tar.gz
+
+if [ -f '/tmp/ArabicSavior-main.tar.gz' ]; then
+    echo "File downloaded successfully"
 	if [ -f /var/lib/dpkg/status ]; then
    		apt-ger -r enigma2-plugin-extensions-arabicsavior
 	else
    		opkg remove enigma2-plugin-extensions-arabicsavior
-	fi
+    fi
 	rm -rf /usr/lib/enigma2/python/Plugins/Extensions/ArabicSavior > /dev/null 2>&1
+else
+    echo "Download failed"
 fi
+
 tar -xf main.tar.gz
 cp -r ArabicSavior-main/usr /
 rm -rf *ArabicSavior* > /dev/null 2>&1
